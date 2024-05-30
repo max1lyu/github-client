@@ -1,5 +1,4 @@
 plugins {
-  id "com.jraska.module.graph.assertion" version "2.5.0"
   id "com.github.triplet.play" version "3.9.1"
   id "com.jraska.github.client.firebase"
   id 'com.jraska.gradle.buildtime'
@@ -159,13 +158,6 @@ dependencies {
 }
 
 apply plugin: 'com.jraska.module.graph.assertion'
-
-moduleGraphAssert {
-  maxHeight = 2
-  allowed = [":app -> .*", ".* -> [\\S:]*-api"]
-  restricted = ["[\\S:]*-api -X> [\\S:]*-api"]
-  assertOnAnyBuild = true
-}
 
 play {
   track = 'internal'

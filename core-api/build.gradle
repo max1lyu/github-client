@@ -2,6 +2,8 @@ apply plugin: 'java-library'
 apply plugin: 'com.android.lint'
 apply plugin: 'kotlin'
 
+ext.moduleNameAssertAlias = "core-api"
+
 dependencies {
   implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
 

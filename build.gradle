@@ -3,6 +3,9 @@ buildscript {
   repositories {
     google()
     mavenCentral()
+    maven {
+      url "https://plugins.gradle.org/m2/"
+    }
   }
   dependencies {
     classpath 'com.android.tools.build:gradle:8.3.2'
@@ -10,6 +13,7 @@ buildscript {
     classpath 'com.google.gms:google-services:4.4.1'
     classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
     classpath("com.spotify.ruler:ruler-gradle-plugin:2.0.0-beta-1")
+    classpath "com.jraska.module.graph.assertion:plugin:2.5.0"
   }
 }
 
@@ -18,6 +22,32 @@ allprojects {
     google()
     mavenCentral()
   }
+}
+
+apply plugin: "com.jraska.module.graph.assertion"
+
+ext.moduleNameAssertAlias = "app"
+
+moduleGraphAssert {
+  allowed = [
+    'app -> feature-api',
+    'app -> feature',
+    'app -> core-api',
+    'app -> core',
+    'feature -> feature-api',
+    'feature -> core-api',
+    'feature -> feature-api',
+    'feature-api -> core-api',
+    'core-api -> core-api',
+    'core -> core-api',
+    'core -> feature-api',
+  ]
+  restricted = [
+    '.* -X> app',
+    'feature -X> feature',
+    'core -X> core',
+  ]
+  assertOnAnyBuild = true
 }
 
 task clean(type: Delete) {
